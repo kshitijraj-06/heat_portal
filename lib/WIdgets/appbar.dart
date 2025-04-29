@@ -38,7 +38,7 @@ class Appbar extends StatelessWidget {
                     child: Text('DVENTURE', textScaler: TextScaler.linear(0.7)),
                   ),
                 ),
-                WidgetSpan(child: SizedBox(width: 32)),xxxxxx
+                WidgetSpan(child: SizedBox(width: 32)),
                 TextSpan(text: 'T',),
                 WidgetSpan(
                   child: Transform.translate(
