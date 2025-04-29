@@ -7,6 +7,13 @@ class SplashScreen extends StatelessWidget{
       appBar: AppBar(
         title: Text('HEAT'),
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+
+          ],
+        ),
+      ),
     );
   }
 }
