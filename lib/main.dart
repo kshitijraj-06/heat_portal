@@ -15,6 +15,7 @@ class HEATPortalApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialRoute: '/home',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: AppBarTheme(
@@ -31,7 +32,7 @@ class HEATPortalApp extends StatelessWidget{
       ),
       getPages: [
         GetPage(
-            name: '/', page:()  => LoginScreen(),
+            name: '/home', page:()  => LoginScreen(),
         ),
         GetPage(
           name: '/login', page:()  => LoginScreen(),
