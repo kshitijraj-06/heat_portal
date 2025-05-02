@@ -16,14 +16,16 @@ class LoginController extends GetxController{
   }
 
   String? emailValidator(String? value){
-    if(value == null && value!.isEmpty)
+    if(value == null && value!.isEmpty) {
       return 'Please Enter Email';
+    }
     return null;
   }
 
   String? passwordValidator(String? value){
-    if(value == null || value!.isEmpty)
+    if(value == null || value.isEmpty) {
       return 'Please Enter Password';
+    }
     return null;
   }
 
@@ -31,7 +33,7 @@ class LoginController extends GetxController{
 
     try{
       final response = await http.post(
-        Uri.parse('https://e452-202-142-69-199.ngrok-free.app/api/auth/login'),
+        Uri.parse('https://54ca-202-142-69-199.ngrok-free.app/api/auth/login'),
         headers: {
           'Content-Type' : 'application/json',
           'Accept' : 'application/json'
@@ -44,11 +46,11 @@ class LoginController extends GetxController{
 
       if(response.statusCode == 200){
         final json = jsonDecode(response.body);
+        final name = json['name'];
         print(response.body);
-        final user = json['user'];
 
-        Get.snackbar("Login Successful", "Welcome user");
-        Get.offAllNamed('/home');
+        Get.snackbar("Login Successful", "Welcome $name");
+        Get.offAllNamed('/dashboard');
       }else{
         print(response.body);
         Get.snackbar("Login Failed", "Error Code: ${response.statusCode}");

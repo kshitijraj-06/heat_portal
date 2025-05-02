@@ -1,10 +1,14 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heat_portal/Screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -25,6 +29,10 @@ class _SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _controller, curve: Curves.slowMiddle)
     );
     _controller.forward();
+    
+    Future.delayed(Duration(seconds: 3), (){
+      Get.offNamed('/login');
+    });
   }
 
   @override
@@ -52,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),)
           ),
         ),
-        nextScreen: LoginScreen(),
+        nextScreen: Container(),
         splashTransition: SplashTransition.slideTransition,
         backgroundColor: Colors.white,
         duration: 3200,
