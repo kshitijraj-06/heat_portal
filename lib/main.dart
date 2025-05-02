@@ -2,8 +2,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:device_preview/device_preview.dart';
-import 'Screens/dashboard.dart';
+import 'Screens/admin_dashboard.dart';
 import 'Screens/login_screen.dart';
+import 'Screens/sales_partner_dashboard.dart';
 import 'Screens/splash_screen.dart';
 
 // void main(){
@@ -45,7 +46,10 @@ class HEATPortalApp extends StatelessWidget{
         GetPage(
           name: '/login', page:()  => LoginScreen(),
         ),
-        GetPage(name: '/dashboard', page: () => Dashboard())
+        GetPage(name: '/dashboard', page: () => Dashboard()
+        ),
+        GetPage(name: '/sales_partner_dashboard', page: () => SalesPartnerScreen()
+        ),
       ],
     );
   }

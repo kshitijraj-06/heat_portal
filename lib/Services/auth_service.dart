@@ -33,7 +33,7 @@ class LoginController extends GetxController{
 
     try{
       final response = await http.post(
-        Uri.parse('https://54ca-202-142-69-199.ngrok-free.app/api/auth/login'),
+        Uri.parse("http://172.20.10.2:8080/api/auth/login"),
         headers: {
           'Content-Type' : 'application/json',
           'Accept' : 'application/json'
@@ -46,11 +46,20 @@ class LoginController extends GetxController{
 
       if(response.statusCode == 200){
         final json = jsonDecode(response.body);
-        final name = json['name'];
+        final role = json['data']['roles'] as List<dynamic>;
+        final roleName = role.map((r) => r['name']).toList();
+        final name = json['data']['name'];
+
         print(response.body);
 
         Get.snackbar("Login Successful", "Welcome $name");
-        Get.offAllNamed('/dashboard');
+        if(roleName.contains('ADMIN')){
+          Get.offAllNamed('/dashboard');
+        }else if(roleName.contains('SALES')){
+          Get.offAllNamed('/sales_partner_dashboard');
+        }else{
+          Get.offAllNamed('/login');
+        }
       }else{
         print(response.body);
         Get.snackbar("Login Failed", "Error Code: ${response.statusCode}");

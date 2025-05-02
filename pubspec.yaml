@@ -67,6 +67,10 @@ flutter:
   assets:
     - assets/bg_heat.jpg
     - assets/user.jpg
+    - assets/bg_dashboard1.jpg
+    - assets/bg_dashboard2.jpg
+    - assets/bg_dashboard3.jpg
+    - assets/bg_dashboard4.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
