@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:heat_portal/Screens/SALES_SCREEN/dashboard.dart';
 import 'package:heat_portal/Screens/login_screen.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
 
@@ -90,7 +91,7 @@ class Dashboard extends StatelessWidget{
             margin: EdgeInsets.all(20),
             padding: EdgeInsets.only(top: 20),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 10),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10)
             ),
             child: ClipRRect(
@@ -178,7 +179,9 @@ class Dashboard extends StatelessWidget{
                                         child: _employeeArea(
                                         'Create New Employee',
                                             Icons.add,
-                                            (){},
+                                            (){
+                                          Get.offAllNamed('/create_emp');
+                                            },
                                         )
                                       ),
                                       StaggeredGridTile.count(
@@ -191,7 +194,9 @@ class Dashboard extends StatelessWidget{
                                         child: _employeeArea(
                                           'View All Employee',
                                           Icons.visibility,
-                                              (){},
+                                              (){
+                                                Get.offAllNamed('/view_employee');
+                                              },
                                         )
                                       ),
                                       StaggeredGridTile.count(
@@ -200,7 +205,8 @@ class Dashboard extends StatelessWidget{
                                         child:  _employeeArea(
                                           'Edit Employee',
                                           Icons.edit,
-                                              (){},
+                                              (){
+                                              },
                                         )
                                       ),
                                     ]
@@ -245,7 +251,9 @@ class Dashboard extends StatelessWidget{
                                 StaggeredGridTile.count(
                                   crossAxisCellCount: 1,
                                   mainAxisCellCount: 1,
-                                  child: _userArea('View Users', Icons.people, (){ print('Users are this that');}),
+                                  child: _userArea('View Users', Icons.people, (){
+
+                                  }),
                                 ),
                                 StaggeredGridTile.count(
                                   crossAxisCellCount: 1,
@@ -256,6 +264,13 @@ class Dashboard extends StatelessWidget{
                                   crossAxisCellCount: 1,
                                   mainAxisCellCount: 1,
                                   child: _userArea('Reports', Icons.bar_chart, (){}),
+                                ),
+                                StaggeredGridTile.count(
+                                  crossAxisCellCount: 1,
+                                  mainAxisCellCount: 2,
+                                  child: _userArea('SALES DASHBOARD', Icons.people, (){
+                                    Get.offAll(SalesDashboardBody());
+                                  }),
                                 ),
                               ],
                             ),

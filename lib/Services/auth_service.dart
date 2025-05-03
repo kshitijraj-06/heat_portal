@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController{
+  final storage = FlutterSecureStorage();
+
   var obscurepassword = true.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -45,10 +48,16 @@ class LoginController extends GetxController{
       );
 
       if(response.statusCode == 200){
+
         final json = jsonDecode(response.body);
+
         final role = json['data']['roles'] as List<dynamic>;
         final roleName = role.map((r) => r['name']).toList();
+
         final name = json['data']['name'];
+
+        final token = json['data']['token'];
+        await storage.write(key: 'token', value: token);
 
         print(response.body);
 

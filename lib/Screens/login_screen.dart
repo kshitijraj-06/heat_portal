@@ -106,38 +106,38 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: 600,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Container(
+                      SizedBox(
+                        width: 600,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
 
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage('assets/bg_heat.jpg'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: Container(
-                          color: Colors.black.withValues(alpha: 0.3),
-                          alignment: Alignment.center,
-                          child: const Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Text(
-                              'Welcome to HEAT Portal',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                                height: 1.2,
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                image: AssetImage('assets/bg_heat.jpg'),
+                                fit: BoxFit.cover,
                               ),
-                              textAlign: TextAlign.center,
+                            ),
+                            child: Container(
+                              color: Colors.black.withValues(alpha: 0.3),
+                              alignment: Alignment.center,
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: Text(
+                                  'Welcome to HEAT Portal',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.2,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
                 ],
               ),
             ),
