@@ -150,6 +150,13 @@ class ViewEmployees extends StatelessWidget {
                                           fontSize: 14,
                                         ),
                                       ),
+                                      Text(
+                                        user.id,
+                                        style: GoogleFonts.urbanist(
+                                          color: Colors.grey[600],
+                                          fontSize: 14,
+                                        ),
+                                      ),
                                       // Optionally add location here if available
                                     ],
                                   ),

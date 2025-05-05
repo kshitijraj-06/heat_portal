@@ -3,13 +3,22 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:heat_portal/Models/user_model.dart';
+import 'package:heat_portal/Screens/Admin_Screens/edit_employees.dart';
 import 'package:heat_portal/Screens/SALES_SCREEN/dashboard.dart';
 import 'package:heat_portal/Screens/login_screen.dart';
+import 'package:heat_portal/Services/viewUser_service.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
 
 import '../test.dart';
 
-class Dashboard extends StatelessWidget{
+class Dashboard extends StatefulWidget{
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  final controller = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +43,7 @@ class Dashboard extends StatelessWidget{
         actions: [
           GestureDetector(
             onTap: (){
-
+              Get.offAllNamed('/profile');
             },
             child: CircleAvatar(
               radius: 30,
@@ -70,7 +79,7 @@ class Dashboard extends StatelessWidget{
               leading: Icon(Icons.table_chart),
               title: Text('Submitted Requests'),
               onTap: (){
-
+                Get.offAll(SalesDashboardBody());
               },
             ),
             ListTile(
@@ -205,8 +214,16 @@ class Dashboard extends StatelessWidget{
                                         child:  _employeeArea(
                                           'Edit Employee',
                                           Icons.edit,
-                                              (){
-                                              },
+                                              () {
+                                            if (controller.alluser.isNotEmpty) {
+                                              Get.offAll(EditEmployeePage(
+                                                employeeId: controller.alluser[0].id,
+                                                employee: controller.alluser[0],
+                                              ));
+                                            } else {
+                                              Get.snackbar("Error", "No employees available to edit");
+                                            }
+                                          },
                                         )
                                       ),
                                     ]
@@ -441,5 +458,4 @@ class Dashboard extends StatelessWidget{
       ),
     );
   }
-
 }

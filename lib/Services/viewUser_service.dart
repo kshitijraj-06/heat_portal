@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:heat_portal/Models/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,7 +21,7 @@ class UserController extends GetxController{
     isLoading.value = true;
     final storage = FlutterSecureStorage();
     final response = await http.get(
-      Uri.parse('http://172.20.10.2:8080/api/users'),
+      Uri.parse('http://192.168.29.136:8080/api/users'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${await storage.read(key: 'token')}'
@@ -60,7 +59,6 @@ class UserController extends GetxController{
   void setselectedRole(String role){
     selectedRole.value = role;
   }
-
 
   void filterUsers(String query) {
     if (query.isEmpty) {

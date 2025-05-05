@@ -12,6 +12,7 @@ class EmployeeController extends GetxController{
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
+  final idController = TextEditingController();
 
   void addRoles(String role){
     if(!selectedRole.contains(role)){
@@ -46,11 +47,12 @@ class EmployeeController extends GetxController{
     return null;
   }
 
-  Future<void> createEmployee(String name, String email, String password, List<String> roles)async{
+  Future<void> createEmployee(String id,String name, String email, String password, List<String> roles)async{
       final token = await storage.read(key: 'token');
-    final uri = Uri.parse("http://172.20.10.2:8080/api/users");
+    final uri = Uri.parse("http://192.168.29.136:8080/api/users");
       final body =
         {
+          "id" : id,
           "name": name,
           "email": email,
           "password": password,

@@ -7,6 +7,7 @@ import 'Screens/Admin_Screens/create_employee.dart';
 import 'Screens/Admin_Screens/view_employees.dart';
 import 'Screens/admin_dashboard.dart';
 import 'Screens/login_screen.dart';
+import 'Screens/profile.dart';
 import 'Screens/sales_partner_dashboard.dart';
 import 'Screens/splash_screen.dart';
 
@@ -57,8 +58,8 @@ class HEATPortalApp extends StatelessWidget{
         ),
         GetPage(name: '/create_emp', page: () => CreateEmployee()
         ),
-        GetPage(name: '/edit_emp', page: () => EditEmployee()
-        ,)
+        GetPage(name: '/profile', page: () => ProfilePage()
+        ),
       ],
     );
   }

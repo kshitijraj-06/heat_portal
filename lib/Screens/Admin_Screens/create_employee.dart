@@ -82,6 +82,12 @@ class _CreateEmployeeState extends State<CreateEmployee> {
                               (fontSize: 24, fontWeight: FontWeight.bold)),
                         SizedBox(height: 24),
                         _inputField(
+                            label: 'ID',
+                            controller: controller.idController,
+                            validator: controller.nameValidator
+                        ),
+                        SizedBox(height: 24),
+                        _inputField(
                             label: 'Name',
                             controller: controller.nameController,
                             validator: controller.nameValidator
@@ -98,6 +104,7 @@ class _CreateEmployeeState extends State<CreateEmployee> {
                             controller: controller.passwordController,
                             validator: controller.passwordValidator
                         ),
+
                         SizedBox(height: 16),
                         SizedBox(height: 16),
                         // Roles Dropdown
@@ -136,10 +143,11 @@ class _CreateEmployeeState extends State<CreateEmployee> {
                           child: ElevatedButton(
                             onPressed: () {
                               Get.find<EmployeeController>().createEmployee(
+                                controller.idController.text,
                                 controller.nameController.text,
                                 controller.emailController.text,
                                 controller.passwordController.text,
-                                controller.selectedRole,
+                                controller.selectedRole
                               );
                             },
                             style: ElevatedButton.styleFrom(
