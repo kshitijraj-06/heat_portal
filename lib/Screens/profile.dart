@@ -33,7 +33,7 @@ class ProfilePage extends StatelessWidget {
               ),
             ],
             image: const DecorationImage(
-              image: AssetImage('assets/bg_dashboard3.jpg'), // Use a subtle travel-themed background
+              image: AssetImage('assets/bg_dashboard3.jpg'),
               fit: BoxFit.cover,
               opacity: 0.1,
             ),
@@ -47,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.blueGrey.withOpacity(0.1),
+                      color: Colors.blueGrey.withValues(alpha: 0.1),
                       blurRadius: 24,
                       offset: Offset(0, 8),
                     ),

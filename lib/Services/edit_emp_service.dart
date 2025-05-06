@@ -22,6 +22,33 @@ class EditEmployeeController extends GetxController{
     selectedRoles.assignAll(userData.roles);
   }
 
+  String? idValidator(String? value){
+    if(idController.text.isEmpty) {
+      return 'ID is required';
+    }
+  }
+
+  String? nameValidator(String? value){
+    if(nameController.text.isEmpty) {
+      return 'Name is required';
+    }
+    return null;
+  }
+
+  String? emailValidator(String? value){
+    if(emailController.text.isEmpty) {
+      return 'Email is required';
+    }
+    return null;
+  }
+
+  String? passwordValidator(String? value){
+    if(passwordController.text.isEmpty) {
+      return 'Password is required';
+    }
+    return null;
+  }
+
   Future<void> updatedata(String id) async {
     final storage = FlutterSecureStorage();
     final id = idController.text;

@@ -100,7 +100,7 @@ class ViewEmployees extends StatelessWidget {
                     crossAxisCount: 4,
                     mainAxisSpacing: 24,
                     crossAxisSpacing: 24,
-                    childAspectRatio: 1.8,
+                    childAspectRatio: 1.7,
                   ),
                   itemCount: controller.filteredbyRole.length,
                   itemBuilder: (context, index) {
