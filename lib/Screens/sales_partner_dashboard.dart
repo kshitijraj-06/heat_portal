@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../WIdgets/appbar.dart';
 
 class SalesPartnerScreen extends StatelessWidget{
+  const SalesPartnerScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

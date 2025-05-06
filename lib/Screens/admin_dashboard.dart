@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:heat_portal/Models/user_model.dart';
 import 'package:heat_portal/Screens/Admin_Screens/edit_employees.dart';
 import 'package:heat_portal/Screens/SALES_SCREEN/dashboard.dart';
-import 'package:heat_portal/Screens/login_screen.dart';
 import 'package:heat_portal/Services/viewUser_service.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
 
 import '../test.dart';
 
 class Dashboard extends StatefulWidget{
+  const Dashboard({super.key});
+
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -72,14 +71,13 @@ class _DashboardState extends State<Dashboard> {
               leading: Icon(Icons.add_box),
               title: Text('Submit New Requirement'),
               onTap: (){
-                Get.offAll(PageDashboard());
               },
             ),
             ListTile(
               leading: Icon(Icons.table_chart),
               title: Text('Submitted Requests'),
               onTap: (){
-                Get.offAll(SalesDashboardBody());
+                Get.offAll(SalesDashBoard());
               },
             ),
             ListTile(
@@ -286,7 +284,7 @@ class _DashboardState extends State<Dashboard> {
                                   crossAxisCellCount: 1,
                                   mainAxisCellCount: 2,
                                   child: _userArea('SALES DASHBOARD', Icons.people, (){
-                                    Get.offAll(SalesDashboardBody());
+                                    Get.offAll(SalesDashBoard());
                                   }),
                                 ),
                               ],

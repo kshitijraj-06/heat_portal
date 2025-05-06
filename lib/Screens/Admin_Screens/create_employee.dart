@@ -6,6 +6,8 @@ import 'package:heat_portal/WIdgets/appbar.dart';
 import '../../Services/create_emp_service.dart';
 
 class CreateEmployee extends StatefulWidget{
+  const CreateEmployee({super.key});
+
   @override
   State<CreateEmployee> createState() => _CreateEmployeeState();
 }

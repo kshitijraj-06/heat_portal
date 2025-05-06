@@ -5,14 +5,13 @@ import 'package:heat_portal/Models/user_model.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
 
 import '../../Services/edit_emp_service.dart';
-import '../../Services/profile_service.dart';
 
 class EditEmployeePage extends StatelessWidget {
   final controller = Get.put(EditEmployeeController());
   final String employeeId;
   final User employee;
 
-  EditEmployeePage({required this.employeeId, required this.employee}) {
+  EditEmployeePage({super.key, required this.employeeId, required this.employee}) {
     controller.loadData(employee);
   }
 

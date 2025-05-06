@@ -1,340 +1,543 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:heat_portal/WIdgets/appbar.dart';
+import 'package:get/get.dart';
 
-class SalesDashboardBody extends StatelessWidget {
-  const SalesDashboardBody({Key? key}) : super(key: key);
+import '../../Services/auth_service.dart';
+import '../../Services/profile_service.dart';
+import '../../Services/viewUser_service.dart';
+
+class SalesDashBoard extends StatefulWidget {
+  @override
+  State<SalesDashBoard> createState() => _SalesDashBoardState();
+}
+
+class _SalesDashBoardState extends State<SalesDashBoard> {
+  final profilecontroller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
-    return AdminScaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
+    return Scaffold(
       appBar: AppBar(
-        title: const Text('HEAT Sales Dashboard'),
-        backgroundColor: Colors.blueGrey[900],
-      ),
-      sideBar: SideBar(
-        items: const [
-          AdminMenuItem(title: 'Dashboard', icon: Icons.dashboard, route: '/dashboard'),
-          AdminMenuItem(title: 'Quotations', icon: Icons.request_quote, route: '/quotations'),
-          AdminMenuItem(title: 'Proforma Invoices', icon: Icons.receipt_long, route: '/invoices'),
-          AdminMenuItem(title: 'Files', icon: Icons.folder, route: '/files'),
-          AdminMenuItem(title: 'Bhutan Ops', icon: Icons.flag, route: '/bhutan'),
-          AdminMenuItem(title: 'Reports', icon: Icons.bar_chart, route: '/reports'),
-        ],
-        selectedRoute: '/dashboard',
-        onSelected: (item) {
-          // handle navigation (use Get.toNamed or Navigator)
-        },
-        header: Container(
-          height: 50,
-          color: Colors.blueGrey[800],
-          child: const Center(
-            child: Text('HEAT Admin', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          ),
+        backgroundColor: Colors.white.withValues(alpha: 1.15),
+        toolbarHeight: 70,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(child: Appbar()),
+            Expanded(
+              child: Text(
+                'Dashboard',
+                style: GoogleFonts.qwigley(color: Colors.black, fontSize: 35),
+              ),
+            ),
+          ],
         ),
-        footer: Container(
-          height: 40,
-          color: Colors.blueGrey[800],
-          child: const Center(
-            child: Text('© 2025 HEAT', style: TextStyle(color: Colors.white)),
-          ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.black),
+              child: Text(
+                'Sales Person',
+                style: GoogleFonts.poppins(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.dashboard),
+              title: Text('Dashboard'),
+              onTap: () {
+                Get.offAllNamed('/sales_dashboard');
+              },
+            ),
+          ],
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Top KPI Cards
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _kpiCard('Quotations Sent', '48', Icons.send),
-                _kpiCard('Pending Payments', '6', Icons.access_time),
-                _kpiCard('Confirmed Files', '22', Icons.check_circle),
-                _kpiCard('Matured Files', '15', Icons.verified),
-              ],
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width,
+          ),
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width,
             ),
-            const SizedBox(height: 32),
-
-            // Sales Pipeline/Funnel Chart (Bar Chart Example)
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Container(
-                height: 260,
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Sales Pipeline', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: BarChart(
-                        BarChartData(
-                          barGroups: [
-                            BarChartGroupData(x: 0, barRods: [
-                              BarChartRodData(toY: 50, color: Colors.blue)
-                            ], showingTooltipIndicators: [0]),
-                            BarChartGroupData(x: 1, barRods: [
-                              BarChartRodData(toY: 30, color: Colors.orange)
-                            ], showingTooltipIndicators: [0]),
-                            BarChartGroupData(x: 2, barRods: [
-                              BarChartRodData(toY: 22, color: Colors.green)
-                            ], showingTooltipIndicators: [0]),
-                            BarChartGroupData(x: 3, barRods: [
-                              BarChartRodData(toY: 15, color: Colors.purple)
-                            ], showingTooltipIndicators: [0]),
-                          ],
-                          titlesData: FlTitlesData(
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: true, reservedSize: 30),
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 300),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Search',
+                            prefixIcon: Icon(Icons.search),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) {
-                                  switch (value.toInt()) {
-                                    case 0:
-                                      return const Text('Enquiry');
-                                    case 1:
-                                      return const Text('Quotation');
-                                    case 2:
-                                      return const Text('Confirmed');
-                                    case 3:
-                                      return const Text('Matured');
-                                    default:
-                                      return const Text('');
-                                  }
-                                },
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 0,
+                              horizontal: 16,
+                            ),
+                            isDense: true,
+                          ),
+                          // onChanged: controller.filterUsers,
+                        ),
+                      ), //TODO: Search Bar
+                      const SizedBox(width: 24),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                profilecontroller.name.value,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                profilecontroller.email.value,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.blueGrey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 20),
+                          GestureDetector(
+                            onTap: () {
+                              Get.offAllNamed('/profile');
+                            },
+                            child: CircleAvatar(
+                              radius: 30,
+                              child: Image.asset('assets/user.jpg'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    'Hello, ${profilecontroller.name.value}',
+                    style: GoogleFonts.poppins(fontSize: 27),
+                  ),
+                  SizedBox(height: 24),
+                  Row(
+                    children: [
+                      Container(
+                        width: 300,
+                        height: 160,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Stack(
+                          children: [
+                            Image.asset('assets/blue_group.png'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 18.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(
+                                    'Quotations Sent',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    "Rs.200",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    'View Entire List',
+                                    style: GoogleFonts.poppins(fontSize: 12),
+                                  ),
+                                ],
                               ),
                             ),
-                            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          ),
-                          borderData: FlBorderData(show: false),
-                          gridData: FlGridData(show: false),
+                          ],
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
+                      ), //TODO: BLUE_GROUP
+                      SizedBox(width: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          //color: Color(0xFFFAD85D),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Stack(
+                          children: [
+                            Image.asset('assets/yellow_group.png'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 25.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(
+                                    'Pending Payments',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    "40",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    'View Entire List',
+                                    style: GoogleFonts.poppins(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ), // TODO: YELLOW_GROUP
+                      SizedBox(width: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          //color: Color(0xFFFAD85D),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Stack(
+                          children: [
+                            Image.asset('assets/yellow_group.png'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 25.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(
+                                    'Completed Itinerary',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    "80",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    'View Entire List',
+                                    style: GoogleFonts.poppins(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ), // TODO: YELLOW_GROUP222
+                      SizedBox(width: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Stack(
+                          children: [
+                            Image.asset('assets/lavender_group.png'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 25.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(
+                                    'Confirmed Itinerary',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    "120",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    'View Entire List',
+                                    style: GoogleFonts.poppins(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ), //TODO: LAVENDER_GROUP
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Container(
+                        width: 940,
+                        height: 400,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF181B1A),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Header Row
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                 Text(
+                                  'Sales',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
+                                  )
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF232624),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.calendar_today,
+                                            color: Colors.white,
+                                            size: 16,
+                                          ),
+                                          SizedBox(width: 6),
+                                          Text(
+                                            '2022',
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    ElevatedButton.icon(
+                                      onPressed: (){
 
-            // Task List / Alerts
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Upcoming Tasks & Alerts',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                    const SizedBox(height: 12),
-                    ListTile(
-                      leading: const Icon(Icons.warning, color: Colors.orange),
-                      title: const Text('3 files approaching payment TL'),
-                      subtitle: const Text('Agent: ABC Travels'),
-                      trailing: ElevatedButton(onPressed: () {}, child: const Text('Remind')),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.mail, color: Colors.blue),
-                      title: const Text('Send confirmation mail for File #123'),
-                      trailing: ElevatedButton(onPressed: () {}, child: const Text('Send')),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // Files Table
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Files', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                    const SizedBox(height: 12),
-                    DataTable(
-                      columns: const [
-                        DataColumn(label: Text('File #')),
-                        DataColumn(label: Text('Agent')),
-                        DataColumn(label: Text('Status')),
-                        DataColumn(label: Text('TL')),
-                        DataColumn(label: Text('Actions')),
-                      ],
-                      rows: [
-                        DataRow(cells: [
-                          const DataCell(Text('123')),
-                          const DataCell(Text('ABC Travels')),
-                          const DataCell(Text('Pending Payment')),
-                          const DataCell(Text('05-May-2025')),
-                          DataCell(Row(
-                            children: [
-                              IconButton(icon: const Icon(Icons.visibility), onPressed: () {}),
-                              IconButton(icon: const Icon(Icons.edit), onPressed: () {}),
-                              IconButton(icon: const Icon(Icons.mail), onPressed: () {}),
-                            ],
-                          )),
-                        ]),
-                        DataRow(cells: [
-                          const DataCell(Text('124')),
-                          const DataCell(Text('Bhutan Explorer')),
-                          const DataCell(Text('Confirmed')),
-                          const DataCell(Text('07-May-2025')),
-                          DataCell(Row(
-                            children: [
-                              IconButton(icon: const Icon(Icons.visibility), onPressed: () {}),
-                              IconButton(icon: const Icon(Icons.edit), onPressed: () {}),
-                              IconButton(icon: const Icon(Icons.mail), onPressed: () {}),
-                            ],
-                          )),
-                        ]),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // Bhutan Operations Panel
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Bhutan Operations',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                    const SizedBox(height: 12),
-                    const Text('Service Mail to Bhutan Agent: Pending'),
-                    const SizedBox(height: 8),
-                    const Text('Flight Ticket Status: Issued'),
-                    const SizedBox(height: 8),
-                    ElevatedButton(onPressed: () {}, child: const Text('Send Service Mail')),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // Analytics/Reports Section (Line Chart Example)
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Analytics & Reports',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 200,
-                      child: LineChart(
-                        LineChartData(
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: const [
-                                FlSpot(0, 10),
-                                FlSpot(1, 30),
-                                FlSpot(2, 20),
-                                FlSpot(3, 40),
-                                FlSpot(4, 35),
+                                      },
+                                      icon: Icon(
+                                        Icons.download,
+                                        color: Color(0xFF181B1A),
+                                      ),
+                                      label: Text(
+                                        'Download',
+                                        style: TextStyle(color: Color(0xFF181B1A)),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xFFF8D96B),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        elevation: 0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
-                              isCurved: true,
-                              color: Colors.blue,
-                              barWidth: 4,
-                              dotData: FlDotData(show: false),
+                            ),
+                            const SizedBox(height: 24),
+                            // Chart
+                            SizedBox(
+                              width: 950,
+                              height: 260,
+                              child: LineChart(
+                                LineChartData(
+                                  minX: 1,
+                                  maxX: 12,
+                                  minY: 0,
+                                  maxY: 50000,
+                                  gridData: FlGridData(
+                                    show: true,
+                                    drawVerticalLine: false,
+                                    getDrawingHorizontalLine:
+                                        (value) => FlLine(
+                                          color: Colors.white.withOpacity(0.05),
+                                          strokeWidth: 1,
+                                        ),
+                                  ),
+                                  titlesData: FlTitlesData(
+                                    leftTitles: AxisTitles(
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        reservedSize: 40,
+                                        getTitlesWidget: (value, meta) {
+                                          switch (value.toInt()) {
+                                            case 10000:
+                                              return _axisLabel('\$10k');
+                                            case 20000:
+                                              return _axisLabel('\$20k');
+                                            case 30000:
+                                              return _axisLabel('\$30k');
+                                            case 40000:
+                                              return _axisLabel('\$40k');
+                                            case 50000:
+                                              return _axisLabel('\$50k');
+                                          }
+                                          return const SizedBox.shrink();
+                                        },
+                                      ),
+                                    ),
+                                    bottomTitles: AxisTitles(
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        reservedSize: 32,
+                                        getTitlesWidget: (value, meta) {
+                                          if (value >= 1 && value <= 12) {
+                                            return Text(
+                                              value.toInt().toString(),
+                                              style: TextStyle(
+                                                color: Colors.white.withOpacity(0.4),
+                                                fontSize: 12,
+                                              ),
+                                            );
+                                          }
+                                          return const SizedBox.shrink();
+                                        },
+                                      ),
+                                    ),
+                                    topTitles: AxisTitles(
+                                      sideTitles: SideTitles(showTitles: false),
+                                    ),
+                                    rightTitles: AxisTitles(
+                                      sideTitles: SideTitles(showTitles: false),
+                                    ),
+                                  ),
+                                  borderData: FlBorderData(show: false),
+                                  lineBarsData: [
+                                    // Main solid line
+                                    LineChartBarData(
+                                      spots: [
+                                        FlSpot(1, 25000),
+                                        FlSpot(2, 20000),
+                                        FlSpot(3, 15000),
+                                        FlSpot(4, 20000),
+                                        FlSpot(5, 18000),
+                                        FlSpot(6, 30000),
+                                        FlSpot(7, 35000),
+                                        FlSpot(8, 40000),
+                                        FlSpot(9, 32000),
+                                        FlSpot(10, 47000),
+                                        FlSpot(11, 30000),
+                                        FlSpot(12, 28000),
+                                      ],
+                                      isCurved: true,
+                                      color: const Color(0xFFB18AFF),
+                                      barWidth: 4,
+                                      isStrokeCapRound: true,
+                                      dotData: FlDotData(show: false),
+                                    ),
+                                    // Dashed comparison line
+                                    LineChartBarData(
+                                      spots: [
+                                        FlSpot(1, 22000),
+                                        FlSpot(2, 23000),
+                                        FlSpot(3, 12000),
+                                        FlSpot(4, 25000),
+                                        FlSpot(5, 19000),
+                                        FlSpot(6, 27000),
+                                        FlSpot(7, 31000),
+                                        FlSpot(8, 35000),
+                                        FlSpot(9, 42000),
+                                        FlSpot(10, 39000),
+                                        FlSpot(11, 34000),
+                                        FlSpot(12, 32000),
+                                      ],
+                                      isCurved: true,
+                                      color: const Color(0xFF3EF1C7),
+                                      barWidth: 3,
+                                      isStrokeCapRound: true,
+                                      dotData: FlDotData(show: false),
+                                      dashArray: [8, 8],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),//TODO: CHART
+                          ],
+                        ),
+                      ),// TODO: CHART_CARD/CONTAINER
+                      SizedBox(width: 20,),
+                      Container(
+                        width: 510,
+                        height: 400,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF181B1A),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        padding:EdgeInsets.all( 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                'Calender',
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
+                                )
                             ),
                           ],
-                          titlesData: FlTitlesData(
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: true, reservedSize: 30),
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) {
-                                  switch (value.toInt()) {
-                                    case 0:
-                                      return const Text('Jan');
-                                    case 1:
-                                      return const Text('Feb');
-                                    case 2:
-                                      return const Text('Mar');
-                                    case 3:
-                                      return const Text('Apr');
-                                    case 4:
-                                      return const Text('May');
-                                    default:
-                                      return const Text('');
-                                  }
-                                },
-                              ),
-                            ),
-                            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                          ),
-                          borderData: FlBorderData(show: false),
-                          gridData: FlGridData(show: false),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  // KPI Card Helper
-  Widget _kpiCard(String title, String value, IconData icon) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        width: 230,
-        height: 100,
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.blueGrey[100],
-              child: Icon(icon, color: Colors.blueGrey[800]),
-            ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
-                Text(title, style: const TextStyle(fontSize: 14)),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget _axisLabel(String text) => Text(
+    text,
+    style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 12),
+  );
 }

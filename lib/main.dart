@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:device_preview/device_preview.dart';
-import 'package:heat_portal/Screens/Admin_Screens/edit_employees.dart';
 import 'Screens/Admin_Screens/create_employee.dart';
 import 'Screens/Admin_Screens/view_employees.dart';
 import 'Screens/admin_dashboard.dart';
@@ -28,7 +26,7 @@ class HEATPortalApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/home',
+      initialRoute: '/dashboard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: AppBarTheme(

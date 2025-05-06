@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:cupertino_icons/cupertino_icons.dart';
 
 import '../Models/user_model.dart';
 
@@ -26,6 +25,7 @@ class EditEmployeeController extends GetxController{
     if(idController.text.isEmpty) {
       return 'ID is required';
     }
+    return null;
   }
 
   String? nameValidator(String? value){
