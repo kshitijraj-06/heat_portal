@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:heat_portal/Screens/Admin_Screens/view_customers.dart';
+import 'Screens/Admin_Screens/create_customer.dart';
 import 'Screens/Admin_Screens/create_employee.dart';
 import 'Screens/Admin_Screens/view_employees.dart';
 import 'Screens/admin_dashboard.dart';
@@ -26,7 +28,7 @@ class HEATPortalApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/dashboard',
+      initialRoute: '/home',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: AppBarTheme(
@@ -58,6 +60,9 @@ class HEATPortalApp extends StatelessWidget{
         ),
         GetPage(name: '/profile', page: () => ProfilePage()
         ),
+        GetPage(name: '/view_customer', page: () => ViewCostumer()
+        ),
+        GetPage(name: '/create_cust', page: () => CreateCustomerPage())
       ],
     );
   }

@@ -7,7 +7,6 @@ import 'package:heat_portal/Screens/SALES_SCREEN/dashboard.dart';
 import 'package:heat_portal/Services/viewUser_service.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
 
-import '../test.dart';
 
 class Dashboard extends StatefulWidget{
   const Dashboard({super.key});
@@ -261,13 +260,15 @@ class _DashboardState extends State<Dashboard> {
                                 StaggeredGridTile.count(
                                   crossAxisCellCount: 2,
                                   mainAxisCellCount: 1,
-                                  child: _userArea('Create New user', Icons.accessibility_new, (){ print('New User Created');}),
+                                  child: _userArea('Create New user', Icons.accessibility_new, (){
+                                    Get.offAllNamed('/create_cust');
+                                  }),
                                 ),
                                 StaggeredGridTile.count(
                                   crossAxisCellCount: 1,
                                   mainAxisCellCount: 1,
                                   child: _userArea('View Users', Icons.people, (){
-
+                                    Get.offAllNamed('/view_customer');
                                   }),
                                 ),
                                 StaggeredGridTile.count(

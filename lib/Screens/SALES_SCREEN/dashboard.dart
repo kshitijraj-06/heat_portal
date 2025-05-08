@@ -4,11 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
 import 'package:get/get.dart';
 
-import '../../Services/auth_service.dart';
 import '../../Services/profile_service.dart';
-import '../../Services/viewUser_service.dart';
 
 class SalesDashBoard extends StatefulWidget {
+  const SalesDashBoard({super.key});
+
   @override
   State<SalesDashBoard> createState() => _SalesDashBoardState();
 }
