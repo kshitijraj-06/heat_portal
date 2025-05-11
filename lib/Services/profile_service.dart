@@ -20,6 +20,7 @@ class ProfileController extends GetxController {
 
   Future<void> fetchMe() async {
     String? token = await storage.read(key: 'token');
+    String? url = await storage.read(key: 'url');
 
     if (token == null) {
       Get.snackbar("Token Error", "No token found in secure storage");
@@ -28,7 +29,7 @@ class ProfileController extends GetxController {
 
     try {
       final response = await http.get(
-        Uri.parse("http://192.168.29.136:8080/api/users/me"),
+        Uri.parse("http://$url:8080/api/users/me"),
         headers: {
           "Accept": "application/json",
           "Authorization": "Bearer $token",

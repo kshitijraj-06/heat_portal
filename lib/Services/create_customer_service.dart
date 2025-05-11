@@ -57,10 +57,11 @@ class CreateCustomerController extends GetxController {
     final address = addressController.text.trim();
     final phone = phoneController.text.trim();
     final email = emailController.text.trim();
+    String? url = await storage.read(key: 'url');
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.29.136:8080/api/customers"),
+        Uri.parse("http://$url:8080/api/customers"),
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',

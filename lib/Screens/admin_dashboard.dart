@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heat_portal/Screens/Admin_Screens/edit_employees.dart';
 import 'package:heat_portal/Screens/SALES_SCREEN/dashboard.dart';
+import 'package:heat_portal/Services/viewCustomer_service.dart';
 import 'package:heat_portal/Services/viewUser_service.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
 
@@ -17,6 +18,7 @@ class Dashboard extends StatefulWidget{
 
 class _DashboardState extends State<Dashboard> {
   final controller = Get.put(UserController());
+  final customerController = Get.put(CustomerController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -285,7 +287,7 @@ class _DashboardState extends State<Dashboard> {
                                   crossAxisCellCount: 1,
                                   mainAxisCellCount: 2,
                                   child: _userArea('SALES DASHBOARD', Icons.people, (){
-                                    Get.offAll(SalesDashBoard());
+                                    Get.toNamed('/sales_dashboard');
                                   }),
                                 ),
                               ],

@@ -10,6 +10,7 @@ class UserController extends GetxController{
   var alluser = <User>[].obs;
   var filteredUser = <User>[].obs;
   var isLoading = false.obs;
+  final storage = FlutterSecureStorage();
 
   @override
   void onInit(){
@@ -19,9 +20,10 @@ class UserController extends GetxController{
 
   Future<List<User>> fetchUsers() async {
     isLoading.value = true;
-    final storage = FlutterSecureStorage();
+    String? url = await storage.read(key: 'url');
+
     final response = await http.get(
-      Uri.parse('http://192.168.29.136:8080/api/users'),
+      Uri.parse('http://$url:8080/api/users'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${await storage.read(key: 'token')}'

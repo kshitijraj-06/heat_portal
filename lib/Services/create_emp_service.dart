@@ -49,7 +49,8 @@ class EmployeeController extends GetxController{
 
   Future<void> createEmployee(String id,String name, String email, String password, List<String> roles)async{
       final token = await storage.read(key: 'token');
-    final uri = Uri.parse("http://192.168.29.136:8080/api/users");
+      String? url = await storage.read(key: 'url');
+    final uri = Uri.parse("http://$url:8080/api/users");
       final body =
         {
           "id" : id,

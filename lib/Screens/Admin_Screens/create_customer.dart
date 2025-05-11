@@ -6,6 +6,8 @@ import 'package:heat_portal/WIdgets/appbar.dart';
 
 
 class CreateCustomerPage extends StatefulWidget{
+  const CreateCustomerPage({super.key});
+
 
   @override
   State<CreateCustomerPage> createState() => _CreateCustomerPageState();

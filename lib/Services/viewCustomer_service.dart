@@ -10,17 +10,14 @@ class CustomerController extends GetxController {
   var filteredCustomers = <Customer>[].obs;
   var isLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchCustomers();
-  }
 
   Future<List<Customer>> fetchCustomers() async {
     isLoading.value = true;
     final storage = FlutterSecureStorage();
+    String? url = await storage.read(key: 'url');
+
     final response = await http.get(
-      Uri.parse('http://192.168.29.136:8080/api/customers'),
+      Uri.parse('http://$url:8080/api/customers'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${await storage.read(key: 'token')}'

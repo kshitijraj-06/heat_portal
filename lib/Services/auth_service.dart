@@ -34,9 +34,12 @@ class LoginController extends GetxController{
 
   Future<void> handlelogin() async{
 
+    final url = "172.20.10.2" ;
+    await storage.write(key: 'url', value: url);
+
     try{
       final response = await http.post(
-        Uri.parse("http://192.168.29.136:8080/api/auth/login"),
+        Uri.parse("http://172.20.10.2:8080/api/auth/login"),
         headers: {
           'Content-Type' : 'application/json',
           'Accept' : 'application/json'
@@ -48,6 +51,8 @@ class LoginController extends GetxController{
       );
 
       if(response.statusCode == 200){
+
+        print(url);
 
         final json = jsonDecode(response.body);
 

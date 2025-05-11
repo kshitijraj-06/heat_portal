@@ -52,8 +52,9 @@ class EditEmployeeController extends GetxController{
   Future<void> updatedata(String id) async {
     final storage = FlutterSecureStorage();
     final id = idController.text;
+    String? url = await storage.read(key: 'url');
 
-    final response = await http.put(Uri.parse('http://192.168.29.136:8080/api/users/$id'),
+    final response = await http.put(Uri.parse('http://$url:8080/api/users/$id'),
     headers:
     {
       'Content-Type': 'application/json',

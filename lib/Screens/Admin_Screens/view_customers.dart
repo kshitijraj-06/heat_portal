@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:heat_portal/Models/customer_model.dart';
 
 import '../../Services/viewCustomer_service.dart';
 import '../../WIdgets/appbar.dart';
