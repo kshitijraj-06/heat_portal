@@ -34,6 +34,7 @@ class _SalesDashBoardState extends State<SalesDashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white.withValues(alpha: 1.15),
         toolbarHeight: 70,

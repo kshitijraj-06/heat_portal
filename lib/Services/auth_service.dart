@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController{
   final storage = FlutterSecureStorage();
-
+  var isLoading = false.obs;
   var obscurepassword = true.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -33,7 +33,7 @@ class LoginController extends GetxController{
   }
 
   Future<void> handlelogin() async{
-
+    isLoading.value = true;
     final url = "172.20.10.2" ;
     await storage.write(key: 'url', value: url);
 
@@ -81,6 +81,8 @@ class LoginController extends GetxController{
     }catch(e){
       print(e);
       Get.snackbar("Login Failed", "Error: $e");
+    }finally{
+      isLoading.value = false;
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heat_portal/WIdgets/appbar.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 import '../Services/auth_service.dart';
 
@@ -33,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildWindowsUI(double width, double height) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar( title: Appbar()),
       body: Center(
         child: ConstrainedBox(
@@ -82,27 +84,38 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 20,),
                         Divider(),
                         SizedBox(height: 20,),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.find<LoginController>().handlelogin();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green.shade900,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                        Obx(() {
+                          if (controller.isLoading.value) {
+                            return Center(
+                              child: SizedBox(
+                                width: 100,
+                                height: 100,
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.ballClipRotatePulse,
+                                ),
+                              ),
+                            );
+                          }
+                          return SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                controller.handlelogin();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green.shade900,
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: Text(
+                                'Login',
+                                style: GoogleFonts.poppins(color: Colors.white),
                               ),
                             ),
-                            child: Text(
-                              'Login',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white
-                              ),
-                            ),
-                          ),
-                        ),
+                          );
+                        })
                       ],
                     ),
                   ),
