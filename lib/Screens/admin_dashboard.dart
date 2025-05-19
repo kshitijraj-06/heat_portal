@@ -117,10 +117,11 @@ class _DashboardState extends State<Dashboard> {
                           borderRadius: BorderRadius.circular(15),
                           child: Container(
                             decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/bg_dashboard2.jpg'),
-                                fit: BoxFit.cover
-                              )
+                              color: Colors.red.shade400
+                              // image: DecorationImage(
+                              //     image: AssetImage('assets/bg_dashboard2.jpg'),
+                              //   fit: BoxFit.cover
+                              // )
                             ),
                             child: Container(
                               decoration: BoxDecoration(
@@ -164,10 +165,11 @@ class _DashboardState extends State<Dashboard> {
                           borderRadius: BorderRadius.circular(15),
                           child: Container(
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage('assets/bg_dashboard3.jpg'),
-                                    fit: BoxFit.cover
-                                )
+                              color: Colors.green.shade400
+                                // image: DecorationImage(
+                                //     image: AssetImage('assets/bg_dashboard3.jpg'),
+                                //     fit: BoxFit.cover
+                                // )
                             ),
                             child: Container(
                               decoration: BoxDecoration(
@@ -242,10 +244,11 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: BorderRadius.circular(15),
                       child: Container(
                         decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage('assets/bg_dashboard1.jpg'),
-                            fit: BoxFit.cover,
-                          ),
+                          color: Colors.blue.shade400
+                          // image: const DecorationImage(
+                          //   image: AssetImage('assets/bg_dashboard1.jpg'),
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
@@ -276,7 +279,9 @@ class _DashboardState extends State<Dashboard> {
                                 StaggeredGridTile.count(
                                   crossAxisCellCount: 1,
                                   mainAxisCellCount: 2, // taller card
-                                  child: _userArea('Itinerary', Icons.trip_origin, (){}),
+                                  child: _userArea('Itinerary', Icons.trip_origin, (){
+                                    Get.offAllNamed('/create_iti');
+                                  }),
                                 ),
                                 StaggeredGridTile.count(
                                   crossAxisCellCount: 1,
@@ -327,9 +332,11 @@ class _DashboardState extends State<Dashboard> {
                                       crossAxisCellCount: 2,
                                       mainAxisCellCount: 1,
                                       child: _accountsArea(
-                                        'Download Account Reports',
+                                        'Mails',
                                         Icons.download_sharp,
-                                            (){},
+                                            (){
+                                          Get.offAllNamed('/sales_dashboard1');
+                                            },
                                       )
                                   ),
                                   StaggeredGridTile.count(

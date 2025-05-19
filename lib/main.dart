@@ -1,11 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heat_portal/Screens/Admin_Screens/view_customers.dart';
+import 'package:heat_portal/Screens/Itinerary/create_itinerary.dart';
 import 'package:heat_portal/Screens/SALES_SCREEN/dashboard.dart';
 import 'Screens/Admin_Screens/create_customer.dart';
 import 'Screens/Admin_Screens/create_employee.dart';
 import 'Screens/Admin_Screens/view_employees.dart';
+import 'Screens/SALES_SCREEN/compose_mail.dart';
+import 'Screens/SALES_SCREEN/mail.dart';
+import 'Screens/SALES_SCREEN/sales_dashboard.dart';
 import 'Screens/admin_dashboard.dart';
 import 'Screens/login_screen.dart';
 import 'Screens/profile.dart';
@@ -19,7 +25,8 @@ import 'Screens/splash_screen.dart';
 //       builder: (context) => HEATPortalApp()));
 // }
 
-void main(){
+void main() async{
+  // await dotenv.load(fileName: ".env");
   runApp(HEATPortalApp());
 }
 
@@ -29,9 +36,13 @@ class HEATPortalApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/home',
+      initialRoute: '/create_iti',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+          textTheme: GoogleFonts.interTextTheme(),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: AppBarTheme(
           titleTextStyle: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
@@ -40,9 +51,6 @@ class HEATPortalApp extends StatelessWidget{
             fontFeatures: [FontFeature.superscripts()]
           )
         ),
-        textTheme: TextTheme(
-          displayLarge : GoogleFonts.poppins()
-        )
       ),
       getPages: [
         GetPage(
@@ -66,6 +74,12 @@ class HEATPortalApp extends StatelessWidget{
         GetPage(name: '/create_cust', page: () => CreateCustomerPage()
         ),
         GetPage(name: '/sales_dashboard', page: () => SalesDashBoard()
+        ),
+        GetPage(name: '/sales_dashboard1', page: () => SalesDashboard()
+        ),
+        GetPage(name: '/mail', page: () => EmailPage()
+        ),
+        GetPage(name: '/create_iti', page: () => CreateItineraryStepper()
         )
       ],
     );

@@ -34,12 +34,12 @@ class LoginController extends GetxController{
 
   Future<void> handlelogin() async{
     isLoading.value = true;
-    final url = "172.20.10.2" ;
+    final url = "localhost" ;
     await storage.write(key: 'url', value: url);
 
     try{
       final response = await http.post(
-        Uri.parse("http://172.20.10.2:8080/api/auth/login"),
+        Uri.parse("http://localhost:8080/api/auth/login"),
         headers: {
           'Content-Type' : 'application/json',
           'Accept' : 'application/json'
@@ -70,7 +70,7 @@ class LoginController extends GetxController{
         if(roleName.contains('ADMIN')){
           Get.offAllNamed('/dashboard');
         }else if(roleName.contains('SALES')){
-          Get.offAllNamed('/sales_partner_dashboard');
+          Get.offAllNamed('/sales_dashboard1');
         }else{
           Get.offAllNamed('/login');
         }
