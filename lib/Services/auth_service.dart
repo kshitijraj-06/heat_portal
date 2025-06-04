@@ -63,6 +63,7 @@ class LoginController extends GetxController{
 
         final token = json['data']['token'];
         await storage.write(key: 'token', value: token);
+        print(token);
 
         print(response.body);
 

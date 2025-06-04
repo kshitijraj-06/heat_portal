@@ -695,12 +695,11 @@ class _SalesDashBoardState extends State<SalesDashBoard> {
                             ],
                             rows: customerController.filteredCustomers.map((customer) {
                               return DataRow(cells: [
-                                DataCell(Text(customer.id.substring(0, 6))), // Shorten UUID
-                                DataCell(Text(customer.name)),
-                                DataCell(Text(customer.age.toString())),
-                                DataCell(Text(customer.address)),
-                                DataCell(Text(customer.phone)),
-                                DataCell(Text(customer.email)),
+                                DataCell(Text(customer.customerId.substring(0, 6))), // Shorten UUID
+                                DataCell(Text(customer.clientName)),
+                               // DataCell(Text(customer.c)),
+                                DataCell(Text(customer.clientPhone)),
+                                DataCell(Text(customer.clientEmail)),
                               ]);
                             }).toList(),
                           ),

@@ -36,7 +36,7 @@ class HEATPortalApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/create_iti',
+      initialRoute: '/home',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           useMaterial3: true,
@@ -79,8 +79,8 @@ class HEATPortalApp extends StatelessWidget{
         ),
         GetPage(name: '/mail', page: () => EmailPage()
         ),
-        GetPage(name: '/create_iti', page: () => CreateItineraryStepper()
-        )
+        // GetPage(name: '/create_iti', page: () => CreateItineraryStepper()
+        // )
       ],
     );
   }

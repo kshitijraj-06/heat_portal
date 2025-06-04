@@ -1,28 +1,34 @@
-class Customer{
-  final String id;
-  final String name;
-  final int age;
-  final String email;
-  final String phone;
-  final String address;
+class Customer {
+  final String customerId;
+  final String clientName;
+  final String clientEmail;
+  final String clientPhone;
+  final String nationality;
+  final String clientEmergencyPhone;
+  final String clientLanguage;
+  final List<dynamic> itineraries;
 
   Customer({
-    required this.id,
-    required this.name,
-    required this.age,
-    required this.email,
-    required this.phone,
-    required this.address,
-});
+    required this.customerId,
+    required this.clientName,
+    required this.clientEmail,
+    required this.clientPhone,
+    required this.nationality,
+    required this.clientEmergencyPhone,
+    required this.clientLanguage,
+    required this.itineraries,
+  });
 
   factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
-      id: json['id'],
-      name: json['name'],
-      age: json['age'],
-      email: json['email'],
-      phone: json['phone'],
-      address: json['address'],
+      customerId: json['customerId'],
+      clientName: json['clientName'],
+      clientEmail: json['clientEmail'],
+      clientPhone: json['clientPhone'],
+      nationality: json['nationality'],
+      clientEmergencyPhone: json['clientEmergencyPhone'] ?? '',
+      clientLanguage: json['clientLanguage'] ?? '',
+      itineraries: json['itineraries'] ?? [],
     );
   }
 }

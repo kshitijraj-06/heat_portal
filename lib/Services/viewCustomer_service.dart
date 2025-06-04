@@ -27,15 +27,25 @@ class CustomerController extends GetxController {
     if (response.statusCode == 200) {
       final jsonBody = jsonDecode(response.body);
       final List customerData = jsonBody['data'];
-      final customers = customerData.map((c) => Customer.fromJson(c)).toList();
+
+      // Parse into model
+      final List<Customer> customers = customerData
+          .map((c) => Customer.fromJson(c))
+          .cast<Customer>()
+          .toList();
+
+      // Assign to observables
       allCustomers.assignAll(customers);
       filteredCustomers.assignAll(customers);
+
       isLoading.value = false;
-      return customers.cast<Customer>();
+      return customers;
     } else {
+      print("Error response: ${response.body}");
       isLoading.value = false;
       throw Exception('Failed to load customers');
     }
+
 
   }
 
@@ -45,8 +55,8 @@ class CustomerController extends GetxController {
     } else {
       filteredCustomers.assignAll(
         allCustomers.where((customer) =>
-        customer.name.toLowerCase().contains(query.toLowerCase()) ||
-            customer.email.toLowerCase().contains(query.toLowerCase())
+        customer.clientName.toLowerCase().contains(query.toLowerCase()) ||
+            customer.clientEmail.toLowerCase().contains(query.toLowerCase())
         ).toList(),
       );
     }

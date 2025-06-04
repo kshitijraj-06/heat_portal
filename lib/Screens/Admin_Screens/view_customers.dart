@@ -5,10 +5,25 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../Services/viewCustomer_service.dart';
 import '../../WIdgets/appbar.dart';
 
-class ViewCostumer extends StatelessWidget {
-  final CustomerController controller = Get.put(CustomerController());
+class ViewCostumer extends StatefulWidget {
 
   ViewCostumer({super.key});
+
+  @override
+  State<ViewCostumer> createState() => _ViewCostumerState();
+}
+
+
+
+class _ViewCostumerState extends State<ViewCostumer> {
+  final CustomerController controller = Get.put(CustomerController());
+
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchCustomers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +104,7 @@ class ViewCostumer extends StatelessWidget {
                                   radius: 28,
                                   backgroundColor: Colors.grey[300],
                                   child: Text(
-                                    customer.name[0].toUpperCase(),
+                                    customer.clientName[0].toUpperCase(),
                                     style: GoogleFonts.urbanist(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -103,7 +118,7 @@ class ViewCostumer extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        customer.name,
+                                        customer.clientName,
                                         style: GoogleFonts.urbanist(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
@@ -111,28 +126,28 @@ class ViewCostumer extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        customer.address,
+                                        customer.clientPhone,
                                         style: GoogleFonts.urbanist(
                                           color: Colors.grey[600],
                                           fontSize: 14,
                                         ),
                                       ),
                                       Text(
-                                        customer.age.toString(),
+                                        customer.clientLanguage,
                                         style: GoogleFonts.urbanist(
                                           color: Colors.grey[600],
                                           fontSize: 14,
                                         ),
                                       ),
                                       Text(
-                                        customer.phone,
+                                        customer.clientEmail,
                                         style: GoogleFonts.urbanist(
                                           color: Colors.grey[600],
                                           fontSize: 14,
                                         ),
                                       ),
                                       Text(
-                                        customer.email,
+                                        customer.nationality,
                                         style: GoogleFonts.urbanist(
                                           color: Colors.grey[600],
                                           fontSize: 14,

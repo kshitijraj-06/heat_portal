@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heat_portal/Screens/Admin_Screens/edit_employees.dart';
+import 'package:heat_portal/Screens/Itinerary/create_itinerary.dart';
 import 'package:heat_portal/Screens/SALES_SCREEN/dashboard.dart';
 import 'package:heat_portal/Services/viewCustomer_service.dart';
 import 'package:heat_portal/Services/viewUser_service.dart';
@@ -117,11 +118,11 @@ class _DashboardState extends State<Dashboard> {
                           borderRadius: BorderRadius.circular(15),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.red.shade400
-                              // image: DecorationImage(
-                              //     image: AssetImage('assets/bg_dashboard2.jpg'),
-                              //   fit: BoxFit.cover
-                              // )
+                              color: Colors.red.shade400,
+                              image: DecorationImage(
+                                  image: AssetImage('assets/bg_dashboard2.jpg'),
+                                fit: BoxFit.cover
+                              )
                             ),
                             child: Container(
                               decoration: BoxDecoration(
@@ -165,11 +166,11 @@ class _DashboardState extends State<Dashboard> {
                           borderRadius: BorderRadius.circular(15),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.green.shade400
-                                // image: DecorationImage(
-                                //     image: AssetImage('assets/bg_dashboard3.jpg'),
-                                //     fit: BoxFit.cover
-                                // )
+                              color: Colors.green.shade400,
+                                image: DecorationImage(
+                                    image: AssetImage('assets/bg_dashboard3.jpg'),
+                                    fit: BoxFit.cover
+                                )
                             ),
                             child: Container(
                               decoration: BoxDecoration(
@@ -244,11 +245,11 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: BorderRadius.circular(15),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.blue.shade400
-                          // image: const DecorationImage(
-                          //   image: AssetImage('assets/bg_dashboard1.jpg'),
-                          //   fit: BoxFit.cover,
-                          // ),
+                          color: Colors.blue.shade400,
+                          image: const DecorationImage(
+                            image: AssetImage('assets/bg_dashboard1.jpg'),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
@@ -280,7 +281,7 @@ class _DashboardState extends State<Dashboard> {
                                   crossAxisCellCount: 1,
                                   mainAxisCellCount: 2, // taller card
                                   child: _userArea('Itinerary', Icons.trip_origin, (){
-                                    Get.offAllNamed('/create_iti');
+                                    Get.to(DesktopStepper());
                                   }),
                                 ),
                                 StaggeredGridTile.count(

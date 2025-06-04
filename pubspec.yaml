@@ -62,6 +62,7 @@ dependencies:
   intl: ^0.19.0
   pdf: ^3.11.3
   printing: ^5.14.2
+  open_file: ^3.5.10
 
 
 dev_dependencies:
@@ -100,6 +101,7 @@ flutter:
     - assets/lavender_group.png
     - assets/aurat.png
     - assets/pink_group.png
+    - assets/heat_logo.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
