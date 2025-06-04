@@ -112,7 +112,7 @@ class PdfGenerator {
           pw.Text('DAY-WISE ITINERARY', style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
           pw.SizedBox(height: 15),
 
-          ...service.dayItineraries.asMap().entries.map((entry) {
+          ...service.daywiseList.asMap().entries.map((entry) {
             final index = entry.key;
             final day = entry.value;
 
@@ -137,7 +137,7 @@ class PdfGenerator {
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
                         pw.Text('Destination:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                        pw.Text(day.destinationController.text),
+                       // pw.Text(day.destinationController.text),
                         pw.SizedBox(height: 8),
                         pw.Text('Details:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                         //pw.Text(day.detailsController.text),

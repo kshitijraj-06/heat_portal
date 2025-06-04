@@ -19,6 +19,7 @@ class CreateItineraryService extends GetxController {
   final clientemailcontroller = TextEditingController();
   final clientphonecontroller = TextEditingController();
   var nationality = ''.obs;
+  final nationalities = ['Indian', 'Foreign'];
   final numAdultscontroller = TextEditingController();
   final numChildrencontroller = TextEditingController();
   final client_emergency_contact = TextEditingController();
@@ -27,11 +28,12 @@ class CreateItineraryService extends GetxController {
   // Itinerary details
   final tourCodecontroller = TextEditingController();
   final destinationcontroller = TextEditingController();
+  final notescontroller = TextEditingController();
   final descrptioncontroller = TextEditingController();
   final durationcontroller = TextEditingController();
   final arrivalcontroller = TextEditingController();
 
-  final RxList<DayItinerary> dayItineraries = <DayItinerary>[DayItinerary()].obs;
+  final RxList<DayWise> daywiseList = <DayWise>[].obs;
 
   var startdate = Rxn<DateTime>();
   var enddate = Rxn<DateTime>();
@@ -40,23 +42,42 @@ class CreateItineraryService extends GetxController {
 
   final storage = FlutterSecureStorage();
 
+
   // Add/remove day blocks
   void addNewDay() {
-    final newDay = DayItinerary();
-    if (dayItineraries.isNotEmpty && dayItineraries.last.date != null) {
-      newDay.setDate(dayItineraries.last.date!.add(Duration(days: 1)));
+    final index = daywiseList.length + 1;
+    final today = DateTime.now().add(Duration(days: index - 1));
+    daywiseList.add(DayWise(
+      Label: "Day $index",
+      day: "Day $index",
+      date: DateFormat('yyyy-MM-dd').format(today),
+      destination: '',
+      notes: '',
+    ));
+  }
+  void removeDay(int index) {
+    if (daywiseList.length > 1) {
+      daywiseList.removeAt(index);
     }
-    dayItineraries.add(newDay);
-    update();
   }
 
-  void removeDay(int index) {
-    if (dayItineraries.length > 1) {
-      dayItineraries[index].dispose();
-      dayItineraries.removeAt(index);
-      update();
+
+  void updateDayWise(int index, {required String date, required String destination, required String notes}) {
+    final DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
+    final String dayName = DateFormat('EEEE').format(parsedDate);
+
+    if (index >= 0 && index < daywiseList.length) {
+      daywiseList[index] = DayWise(
+        Label: "Day ${index + 1}",
+        day: dayName,
+        date: date,
+        destination: destination,
+        notes: notes,
+      );
+      update(); // to refresh the UI
     }
   }
+
 
   // Create customer
   Future<void> createcustomer(Map<String, dynamic> data) async {
@@ -93,7 +114,7 @@ class CreateItineraryService extends GetxController {
 
     try {
       final response = await http.post(
-        Uri.parse('http://$url:8080/api/itineraries/customer/${customer_ID.value}'),
+        Uri.parse('http://$url:8080/api/itineraries/customer/CUST_004'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -136,12 +157,33 @@ class CreateItineraryService extends GetxController {
       if (nights >= 0) {
         numberofnights.value = nights;
         numberofdays.value = nights + 1;
+
+        _populateDayWiseList(startdate.value!, numberofdays.value);  // 👈 Add this
       } else {
         numberofnights.value = 0;
         numberofdays.value = 0;
+        daywiseList.clear();
       }
     }
   }
+
+  void _populateDayWiseList(DateTime start, int days) {
+    daywiseList.clear();
+    for (int i = 0; i < days; i++) {
+      final currentDate = start.add(Duration(days: i));
+      final dateStr = DateFormat('yyyy-MM-dd').format(currentDate);
+      final dayName = DateFormat('EEEE').format(currentDate); // Monday, etc.
+
+      daywiseList.add(DayWise(
+        Label: "Day ${i + 1}",
+        day: dayName,
+        date: dateStr,
+        destination: '',
+        notes: '',
+      ));
+    }
+  }
+
 
   // Build final data for API
   Map<String, dynamic> buildItineraryData() {
@@ -154,7 +196,7 @@ class CreateItineraryService extends GetxController {
       'numChildren': numChildrencontroller.text,
       'tourCode': tourCodecontroller.text,
       'destination': destinationcontroller.text,
-      'duration': durationcontroller.text,
+      'duration': numberofdays.toString(),
       'startDate': startdate.value != null
           ? DateFormat('yyyy-MM-dd').format(startdate.value!)
           : '',
@@ -164,27 +206,8 @@ class CreateItineraryService extends GetxController {
       'noOfDays': numberofdays.value.toString(),
       'noOfNights': numberofnights.value.toString(),
       'arrival': arrivalcontroller.text,
-      'dayWiseList':
-      dayItineraries.map((day) => day.toModel().toJson()).toList(),
-    };
-  }
+      'dayWiseList': daywiseList.map((d) => d.toJson()).toList(),
 
-  @override
-  void onClose() {
-    agentnamecontroller.dispose();
-    agentemailcontroller.dispose();
-    agentphonecontroller.dispose();
-    clientnamecontroller.dispose();
-    clientemailcontroller.dispose();
-    clientphonecontroller.dispose();
-    tourCodecontroller.dispose();
-    destinationcontroller.dispose();
-    descrptioncontroller.dispose();
-    durationcontroller.dispose();
-    arrivalcontroller.dispose();
-    client_emergency_contact.dispose();
-    client_language.dispose();
-    dayItineraries.forEach((day) => day.dispose());
-    super.onClose();
+    };
   }
 }
