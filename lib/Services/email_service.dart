@@ -7,8 +7,8 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class EmailService extends GetxController {
-  final _clientId = '564406745968-s8d05l88e8a08ku83rem536bf3pkkgl5.apps.googleusercontent.com';
-  final _clientSecret = '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';
+  // final _clientId = '564406745968-s8d05l88e8a08ku83rem536bf3pkkgl5.apps.googleusercontent.com';
+  // final _clientSecret = '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';
   // Use full-mail scope to allow read, modify, delete, star, move, etc.
   final _scopes = [
     'https://mail.google.com/'

@@ -1,3 +1,5 @@
+/lib/Services/email_service.dart
+
 # Miscellaneous
 *.class
 *.log
